@@ -5,6 +5,7 @@ from news_utils import send_email
 
 load_dotenv()
 
+TOPIC = os.getenv("NEWS_TOPIC", "tesla")
 API_KEY = os.getenv("NEWS_API_KEY")
 
 if not API_KEY:
@@ -12,7 +13,7 @@ if not API_KEY:
 
 news_url = (
     f"https://newsapi.org/v2/everything?"
-    f"q=tesla&language=en&sortBy=publishedAt&apiKey={API_KEY}"
+    f"q={TOPIC}&language=en&sortBy=publishedAt&apiKey={API_KEY}"
 )
 
 response = requests.get(news_url, timeout=10)
@@ -34,7 +35,7 @@ for article in content["articles"][:20]:
 
 
 send_email(
-    subject="Tesla News",
+    subject="Today's News",
     body=body,
     recipient=os.getenv("EMAIL_ADDRESS")
 )
