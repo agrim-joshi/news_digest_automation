@@ -21,9 +21,15 @@ response.raise_for_status()
 
 content = response.json()
 
+articles = content.get("articles", [])
+
+if not articles:
+    print("No articles found.")
+    exit()
+
 body = "Subject: Today's News\n\n"
 
-for article in content["articles"][:20]:
+for article in articles[:20]:
     title = article.get("title")
     description = article.get("description")
     article_url = article.get("url")
